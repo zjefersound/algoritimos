@@ -30,7 +30,6 @@ typedef struct Turma
 void main() {
     
     struct Aluno aluno1, alunos[10];
-    
     Pessoa pessoa1;
     pessoa1.idade = 18;
 
@@ -49,7 +48,9 @@ void main() {
     } else if ( strcmp(cco.alunos[0].nome, "Jeferson" ) < 0){
         printf("São diferentes");
     }
-    
+    int result;
+    result = strcmp( cco.alunos[0].nome, "Jeferson");
+    printf("\n\n\n%i",result); 
     // Para excluir joao = NULL 
     // strcmp
 }
