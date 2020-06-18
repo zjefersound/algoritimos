@@ -9,8 +9,8 @@ typedef struct {
 void setPessoas(Pessoa vet[], int i) {
     int j = 0;
     for ( j = 0; j < i; j++ ){
-        scanf("%s", vet[j].nome);
         scanf("%i", &vet[j].idade);
+        scanf("%s", vet[j].nome);
         scanf("%f", &vet[j].notas);
     }
 
@@ -25,10 +25,17 @@ void getPessoas(Pessoa vet[], int i) {
 
 }
 
+char scanner(char input[], int len){
+    if (!fgets(input, len, stdin)) { /* tratamento de erro */ }
+    len = strlen(input);
+    if (input[len - 1] == '\n') input[len - 1] = 0; // remove '\n' e actualiza len 
+    return input;
+}
     
 void main() {
-    Pessoa group[3];
-    setPessoas(group,3);
-    getPessoas(group,3);
-    
+    char apelido[3];
+    scanner(apelido, 3);
+    printf("AAAA-%s---",apelido);
+
+
 }
