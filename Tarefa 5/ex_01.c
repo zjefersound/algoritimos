@@ -1,6 +1,7 @@
 // Aluno: Jeferson S. M. de Souza
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define HUMAN 1
 #define EXACT 1
@@ -166,9 +167,12 @@ int main(){
     int codeSearch, categoryCodeSearch;
     char textSearch;
 
-    Book exact[EXACT];
-    Book human[HUMAN];
-    Book biomedical[BIOMEDICAL];
+    Book *exact;
+    Book *human;
+    Book *biomedical;
+    exact = (Book *) malloc(sizeof(exact) * EXACT);
+    human = (Book *) malloc(sizeof(human) * HUMAN);
+    biomedical = (Book *) malloc(sizeof(biomedical) * BIOMEDICAL);
 
     printf("\nLivros de Exatas: ");
     setBookAll(exact, EXACT);
@@ -284,5 +288,8 @@ int main(){
             printf("Erro: categoria nao existe");
             break;
     }
+    free(exact);
+    free(human);
+    free(biomedical);
     return 0;
 }
