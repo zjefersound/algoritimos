@@ -161,10 +161,14 @@ void setCarOwnerByChassis(Car car[]){
 
 void main(){
     //Declarações
-    Car carros[MAX];
+    Car *carros;
+    carros = (Car *) malloc(sizeof(carros) * MAX);
+    
     setCars(carros);
     getDieselCarOwnersByYear(carros, 1980);
     getCarPlates(carros);
     getCarModelAndColor(carros);
     setCarOwnerByChassis(carros);
+
+    free(carros);
 }
