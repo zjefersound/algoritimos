@@ -5,7 +5,16 @@
 
 //accuracy
 #define TERMS 15
+//pi
 #define M_PI acos(-1.0)
+//cicle degree
+#define N 360
+
+typedef struct Sine {
+    float *degree;
+    float *radian;
+    float *sine;
+}Sine;
 
 int ** createMatrix(int **matrix, int rows, int columns) {
     int row, column;
@@ -39,7 +48,7 @@ int calcualateFactorial(int number){
     return factorial;
 }
 
-float calculateSen(float radian, int accuracy, float pi){
+float calculateSine(float radian, int accuracy, float pi){
     //controll
     int term;
     int increment = 2;
@@ -47,23 +56,27 @@ float calculateSen(float radian, int accuracy, float pi){
     int final = initial + (accuracy * increment);
     int controller = 1;
     //calc
-    float termValue, sen = radian;
+    float termValue, sine = radian;
 
-    for(term = initial; term < final; term+=increment){
+    for(term = initial; term < final; term += increment){
         termValue = pow(radian, term)/calcualateFactorial(term);
         
         if(controller % 2 == 0){
-            printf("\n + %d",term);
+            sine += termValue;
         }else{
-            printf("\n - %d",term);
+            sine -= termValue;
         }
         controller++;
     }
+    return sine;
 }
 
 void main(){
-    int *x;
-    float xRadian;
+    Sine sine;
+
+    // int *x;
+    // float xRadian;
+    // float sine;
 
     printf("\nCalcular Seno:");
     printf("\nDigite o angulo em graus");
@@ -71,6 +84,7 @@ void main(){
     // xRad = degreeToRadian(x);
 
     // printf("%d",calcualateFactorial(x));
-    calculateSen(1.0, TERMS, M_PI);
+    // sine = calculateSine(degreeToRadian(60), TERMS, M_PI);
+    // printf("%f", sine);
 
 } // <3
