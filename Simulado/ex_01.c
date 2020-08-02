@@ -4,39 +4,20 @@
 #include <math.h>
 
 //accuracy
-#define TERMS 15
+#define TERMS 16
 //pi
 #define M_PI acos(-1.0)
 //cicle degree
 #define N 360
 
 typedef struct Sine {
-    float *degree;
-    float *radian;
-    float *sine;
+    float degree;
+    float radian;
+    float sine;
 }Sine;
 
-int ** createMatrix(int **matrix, int rows, int columns) {
-    int row, column;
-
-    matrix = (int **) malloc(sizeof(matrix) * rows);
-    for (row = 0; row < rows; row++) {
-        matrix[row] = (int *) malloc(sizeof(matrix[row]) * columns);
-    }
-    return matrix;
-}
-
-void freeMatrix(int **matrix, int rows){
-    int row, column;
-
-    for (row = 0; row < rows; row++) {
-        free(matrix[row]);
-    }
-    free(matrix);
-}
-
 float degreeToRadian(int degree){
-    return ((float) degree * M_PI)/ 180;
+    return (((float) degree * M_PI)/ (float) 180);
 }
 
 int calcualateFactorial(int number){
@@ -48,19 +29,21 @@ int calcualateFactorial(int number){
     return factorial;
 }
 
-float calculateSine(float radian, int accuracy, float pi){
+float calculateSine(int degree){
     //controll
+    int accuracy = TERMS;
     int term;
     int increment = 2;
     int initial = 3;
     int final = initial + (accuracy * increment);
     int controller = 1;
+
     //calc
+    float radian = degreeToRadian(degree);
     float termValue, sine = radian;
 
     for(term = initial; term < final; term += increment){
-        termValue = pow(radian, term)/calcualateFactorial(term);
-        
+        termValue = pow(radian, term)/ (float) calcualateFactorial(term);
         if(controller % 2 == 0){
             sine += termValue;
         }else{
@@ -71,20 +54,47 @@ float calculateSine(float radian, int accuracy, float pi){
     return sine;
 }
 
-void main(){
-    Sine sine;
+Sine * newSine(){
+    Sine *array;
+    array = (Sine *) malloc(sizeof(array) * N);
+    int index;
+    for (index = 0; index < N; index++) {
+        array[index].degree = index;
+        array[index].radian = degreeToRadian(index);
+        array[index].sine = calculateSine(index);
+    }
+    return array;
+}
 
-    // int *x;
-    // float xRadian;
-    // float sine;
+void printSineArray(Sine *array, int max){
+    int index;
+    for (index = 0; index < max; index++) {
+        printf("\nsin (%i) : %f", index, array[index].sine);
+    }
+}
+void printSineArrayBiggerThan(Sine *array, int max, float condition){
+    int index;
+    for (index = 0; index < max; index++) {
+        if( array[index].sine > condition){
+            printf("\nsin (%i) : %f", index, array[index].sine);
+        }
+    }
+}
 
+void degreeInput(int degree){
     printf("\nCalcular Seno:");
     printf("\nDigite o angulo em graus");
-    // scanf("%d", &x);
-    // xRad = degreeToRadian(x);
+    scanf("%d", &degree);
+}
+void main(){
+    Sine *sine;
+    sine = newSine();
+    int degree;
 
-    // printf("%d",calcualateFactorial(x));
-    // sine = calculateSine(degreeToRadian(60), TERMS, M_PI);
-    // printf("%f", sine);
-
+    degreeInput(degree);
+    printf("\n%f", sine[degree].sine);
+    
+    printSineArrayBiggerThan(sine, N, 0.5);
+    printSineArray(sine, N);    
+    free(sine);
 } // <3
